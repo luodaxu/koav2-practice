@@ -1,11 +1,12 @@
 import Koa from 'koa';
 import logger from 'koa-logger';
 import serve from 'koa-static';
-import convert from 'koa-convert';
+import convert from 'koa-convert';  // necessary for koa v2
 import bodyParser from 'koa-bodyparser';
 import render from 'koa-ejs';
 import co from 'co';
 import path from 'path';
+import './db/db';
 import router from './routes';
 
 const app = new Koa();
