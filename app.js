@@ -28,12 +28,12 @@ import passport from 'koa-passport';
 app.use(passport.initialize())
 app.use(passport.session())
 render(app, {
-    root: './views',
+    root: './public',
     layout: false,
     viewExt: 'html',
     cache: false
 });
-app.use(convert(serve(path.join(__dirname, 'public'))));
+app.use(convert(serve(path.join(__dirname, 'assets'))));
 app.context.render = co.wrap(app.context.render);
 
 unauthrouter(app);

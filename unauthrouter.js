@@ -2,11 +2,15 @@ import Router from 'koa-router';
 import passport from 'passport';
 function r(app) {
     const router = new Router();
+
+    router.get('/', async ctx => {
+        await ctx.render('index');
+    });
     router.get('/login', async (ctx)=> {
         await ctx.render('login');
     });
     router.post('/login', passport.authenticate('local', {
-        successRedirect: '/user',
+        successRedirect: '/',
         failureRedirect: '/login'
     }));
     app

@@ -2,7 +2,7 @@ import Router from 'koa-router';
 import userCtrl from '../controllers/user';
 
 function buildUserRoute(app) {
-  const prefix = '/user';
+  const prefix = '/rest/user';
   const router = new Router({ prefix });
 
   router.get('/', userCtrl.all);

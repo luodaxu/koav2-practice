@@ -2,7 +2,7 @@ import Router from 'koa-router';
 import postCtrl from '../controllers/post';
 
 function buildPostRoute(app) {
-  const prefix = '/post';
+  const prefix = '/rest/post';
   const router = new Router({ prefix });
 
   router.get('/', postCtrl.all);
