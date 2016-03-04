@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
+import './nav.css';
+
 export default class Nav extends Component {
     render() {
         return (
