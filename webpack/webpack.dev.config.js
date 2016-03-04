@@ -32,7 +32,7 @@ module.exports = {
             __DEVELOPMENT__: true
         }),
         new htmlWebpackPlugin({
-            title: 'Ddx',
+            title: 'Koa & React',
             filename: 'index.html',
             template: './src/index.template.html' // context property is '..'
         })
