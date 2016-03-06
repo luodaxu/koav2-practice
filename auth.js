@@ -12,6 +12,7 @@ passport.deserializeUser(function (username, done) {
 var LocalStrategy= passport_local.Strategy;
 passport.use(new LocalStrategy(
     (username, password, done) => {
+        let user = await
         if(username === 'luodaxu' && password === '123456') {
             return done(null, {name: username});
         }
