@@ -1,5 +1,5 @@
 'use strict';
-// https://github.com/tortillaj/Koa-Blog/blob/master/test/user.js
+
 const app = require('../app');
 const assert = require('assert');
 const requtest = require('co-supertest').agent(app.listen());
