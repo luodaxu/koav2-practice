@@ -38,9 +38,6 @@ function r(app) {
             $this: ctx
         });
     });
-    router.get('/hello', async ctx => {
-        await ctx.render('hello');
-    });
     router.get('/login', async (ctx)=> {
         if(ctx.isAuthenticated()) {
             ctx.flash = {error: '你已经登陆'};
@@ -60,7 +57,8 @@ function r(app) {
     router.get('/register', async ctx => {
         await ctx.render('register', {
             title: '用户注册',
-            loginfo: null
+            loginfo: null,
+            $this: ctx
         });
     });
     router.post('/register', async ctx => {
