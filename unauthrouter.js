@@ -3,24 +3,54 @@ import passport from 'passport';
 function r(app) {
     const router = new Router();
 
+    router.get('/config' ,async ctx => {
+        if(ctx.query.app === 'HRGroup:HRC') {
+            ctx.body = {
+                ResourceType: ["HRGroup:WIILDistributionResourceType", "Global:WebService", "Global:WebPage"],
+                ApplicationType: ["HRGroup:AppType1", "HRGroup:AppType2"],
+                RoleType: [],
+                IsDynamic: false,
+                Permission: ['allow']
+            }
+        } else if (ctx.query.app === 'HRGroup:APP2') {
+            ctx.body = {
+                ResourceType: ["HRGroup:WIILDistributionResourceType", "HRGroup:HRCSelectedType1", "HRGroup:HRCSelectedType2"],
+                ApplicationType: ["HRGroup:AppType3"],
+                RoleType: [],
+                IsDynamic: false,
+                Permission: ['allow', 'deny']
+            }
+        }
+    });
+
     router.get('/', async ctx => {
         let loginfo = {
             logined: false
         };
-        if(ctx.req.user) {
+        if(ctx.isAuthenticated()) {
             loginfo.logined = true;
-            loginfo.name = ctx.req.user.name.name;
+            loginfo.name = ctx.passport.user.get('username');
+            $this: ctx
         }
         await ctx.render('index', {
             title: '主页',
-            loginfo: loginfo
+            loginfo: loginfo,
+            $this: ctx
         });
     });
+    router.get('/hello', async ctx => {
+        await ctx.render('hello');
+    });
     router.get('/login', async (ctx)=> {
-        if(ctx.req.user) return ctx.redirect('/');
+        if(ctx.isAuthenticated()) {
+            ctx.flash = {error: '你已经登陆'};
+            return ctx.redirect('/');
+        };
         await ctx.render('login', {
             title: '用户登录',
-            loginfo: null
+            loginfo: null,
+            user: ctx.req.user || {},
+            $this: ctx
         });
     });
     router.post('/login', passport.authenticate('local', {

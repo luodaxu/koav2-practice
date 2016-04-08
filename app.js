@@ -8,21 +8,24 @@ import MongoStore from 'koa-generic-session-mongo';
 import render from 'koa-ejs';
 import co from 'co';
 import path from 'path';
+import flash from 'koa-flash';
 import './db/db';
 import unauthrouter from './unauthrouter';
 import router from './routes';
 import authMiddleware from './middlewares/authMiddleware';
+import cors from 'koa-cors';
 
 const app = new Koa();
 app.keys = ['secret'];
 app.use(logger());
 app.use(bodyParser());
+app.use(convert(cors()));
 app.use(convert(session({
     store: new MongoStore({
         url: "mongodb://127.0.0.1:27017/koav2"
     })
 })));
-
+app.use(convert(flash()));
 import './auth';
 import passport from 'koa-passport';
 app.use(passport.initialize())

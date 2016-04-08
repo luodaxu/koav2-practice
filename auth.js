@@ -1,21 +1,22 @@
 import passport from 'koa-passport';
 import passport_local from 'passport-local';
+import User from './models/user';
+import co from 'co';
 
 passport.serializeUser((user, done) => {
-    done(null, user);
+    done(null, user._id);
 });
 
-passport.deserializeUser(function (username, done) {
-    done(null, {name: username});
+passport.deserializeUser(function (id, done) {
+    User.findById(id,done);
 });
 
 var LocalStrategy= passport_local.Strategy;
-passport.use(new LocalStrategy(
-    (username, password, done) => {
-        let user = await
-        if(username === 'luodaxu' && password === '123456') {
-            return done(null, {name: username});
+passport.use(new LocalStrategy(async function(username, password, done){
+        let user = await User.getExistUser(username, password);
+        if(user) {
+            done(null, user);
+        } else {
+            done(null, false);
         }
-        return done(null, false, {message: 'Incorrect username or password'});
-    }
-));
+}));

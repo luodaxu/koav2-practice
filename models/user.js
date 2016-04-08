@@ -18,6 +18,10 @@ const UserSchema = new Schema({
     }
 });
 
+UserSchema.statics.getExistUser = function (username, password) {
+    return this.findOne({username: username, password: password}).exec();
+};
+
 const User = mongoose.model('User', UserSchema);
 
 export default User;
